@@ -1,41 +1,82 @@
-let cnt = 0;
+const myMemories = [
+    { src: "a.jpeg", caption: "Бидний анх танилцсан мөч... ✨" },
+    { src: "img2.JPG", caption: "Бидний дуртай газар ☕" },
+    { src: "img3.JPG", caption: "Чиний энэ инээмсэглэл хамгийн гоё нь 😍" },
+    { src: "img4.JPG", caption: "Үүрд хамтдаа ♾️" }
+];
 
+const yesBtn = document.getElementById('yesBtn');
+const noBtn = document.getElementById('noBtn');
+const gallery = document.getElementById('gallery');
+const grid = document.getElementById('grid');
+const gameOverlay = document.getElementById('gameOverlay');
+const puzzleBoard = document.getElementById('puzzleBoard');
 
-function no(){
-cnt++;
-if(cnt < 5){
-title.innerText = `Are you sure? (${cnt}/5)`;
-text.innerText = "Think again 😌";
-} else {
-yes();
+let noClickCount = 0;
+const noMessages = ["really? 🥺", "so you press it again", "zss", "araicde", "im so offended💔"];
+
+noBtn.addEventListener('click', () => {
+    if (noClickCount < 5) {
+        noBtn.innerText = noMessages[noClickCount];
+        noBtn.classList.add('shake');
+        setTimeout(() => noBtn.classList.remove('shake'), 400);
+        
+        let currentScale = 1 + (noClickCount * 0.2);
+        yesBtn.style.transform = `scale(${currentScale + 0.2})`;
+        noClickCount++;
+    } else {
+        noBtn.innerText = "ugaasaa ci tatgalzaj cadku 💕";
+        noBtn.style.background = "linear-gradient(135deg, #ff4d6d, #c9184a)";
+        noBtn.style.color = "white";
+        noBtn.onclick = handleYes; 
+    }
+});
+
+function handleYes() {
+    grid.innerHTML = "";
+    myMemories.forEach((item) => {
+        const div = document.createElement('div');
+        div.className = 'photo-item';
+        div.innerHTML = `<img src="${item.src}"><p class="photo-caption">${item.caption}</p>`;
+        grid.appendChild(div);
+    });
+    gallery.classList.remove('hidden');
 }
+
+yesBtn.addEventListener('click', handleYes);
+
+// Puzzle Logic
+let tiles = [];
+function initGame() {
+    tiles = [...Array(16).keys()];
+    tiles.sort(() => Math.random() - 0.5);
+    renderBoard();
 }
 
-
-function yes(){
-card.innerHTML = `
-<h1>YAY 💖</h1>
-<p>You are officially my Valentine 🌹<br>See you soon 😘</p>
-`;
-hearts();
+function renderBoard() {
+    puzzleBoard.innerHTML = '';
+    tiles.forEach((tile, i) => {
+        const div = document.createElement('div');
+        div.className = 'tile' + (tile === 0 ? ' empty' : '');
+        div.innerText = tile === 0 ? '' : tile;
+        div.onclick = () => moveTile(i);
+        puzzleBoard.appendChild(div);
+    });
 }
 
-
-function hearts(){
-for(let i=0;i<25;i++){
-let h=document.createElement('div');
-h.innerText='❤️';
-h.style.position='fixed';
-h.style.left=Math.random()*100+'vw';
-h.style.bottom='-20px';
-h.style.fontSize='24px';
-h.style.animation='float '+(2+Math.random()*3)+'s linear';
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),5000);
-}
+function moveTile(i) {
+    const empty = tiles.indexOf(0);
+    const isAdjacent = [i-1, i+1, i-4, i+4].includes(empty);
+    if (isAdjacent) {
+        [tiles[i], tiles[empty]] = [tiles[empty], tiles[i]];
+        renderBoard();
+        if (tiles.slice(0, 15).every((t, idx) => t === idx + 1)) {
+            document.getElementById('winMessage').classList.remove('hidden');
+        }
+    }
 }
 
-
-const s=document.createElement('style');
-s.innerHTML='@keyframes float{from{transform:translateY(0);opacity:1}to{transform:translateY(-120vh);opacity:0}}';
-document.head.appendChild(s);
+document.getElementById('gameBtn').onclick = () => { gameOverlay.classList.remove('hidden'); initGame(); };
+document.getElementById('closeX').onclick = () => gallery.classList.add('hidden');
+document.getElementById('closeBtn').onclick = () => gallery.classList.add('hidden');
+document.getElementById('closeGame').onclick = () => gameOverlay.classList.add('hidden');
