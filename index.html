@@ -1,24 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="mn">
 <head>
-<meta charset="UTF-8">
-<title>Valentine</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Гэнэтийн бэлэг 💌</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  
+  <div id="revealLayer" class="reveal-layer"></div>
 
+  <main class="content">
+    <section class="glass-card">
+      <div class="luxury-seal">💌</div>
+      <span class="etiquette">Зөвхөн чамд зориулав</span>
+      <h1 class="title">Миний Валентин болох уу?</h1>
 
-<div class="card" id="card">
-<h1 id="title">Will you be my Valentine? ❤️</h1>
-<p id="text">I have something special planned for us.</p>
-<div class="btns">
-<button class="yes" onclick="yes()">Yes 💕</button>
-<button class="no" onclick="no()">No</button>
-</div>
-</div>
+      <div class="button-container">
+        <button class="btn btn-yes heartbeat" id="yesBtn">
+          <span>Тийм ээ</span>
+          <svg class="heart-icon" viewBox="0 0 32 32"><path d="M16 28.5L14.1 26.8C7.3 20.7 2.8 16.6 2.8 11.6C2.8 7.5 5.9 4.4 10 4.4C12.3 4.4 14.5 5.5 15.9 7.2C17.3 5.5 19.5 4.4 21.8 4.4C25.9 4.4 29 7.5 29 11.6C29 16.6 24.5 20.7 17.7 26.8L16 28.5Z" fill="currentColor"/></svg>
+        </button>
+        <button class="btn btn-no" id="noBtn">Үгүй</button>
+      </div>
+    </section>
+  </main>
 
+  <div id="gallery" class="overlay hidden">
+    <div class="gallery-wrapper">
+      <button class="close-icon" id="closeX">✕</button>
+      <h2 class="title">I LOVE YOU MY BBG ❤️</h2>
+      <div id="grid" class="image-grid"></div>
+      
+      <div class="controls-row">
+        <button class="btn btn-game" id="gameBtn">Hint of your present</button>
+        <button class="btn btn-no" id="closeBtn">Хаах</button>
+      </div>
+    </div>
+  </div>
 
-<script src="script.js"></script>
+  <div id="gameOverlay" class="overlay hidden">
+    <div class="game-container glass-card">
+      <button class="close-icon" id="closeGame">✕</button>
+      <h2 class="title" style="font-size: 1.5rem;">Hint of your present</h2>
+      <p class="subtitle" id="gameInstruction">sequenced oruulaarai haira</p>
+      <div class="puzzle-board" id="puzzleBoard"></div>
+      <div id="winMessage" class="win-message hidden">
+        <h3>good girl</h3>
+        <p>Миний бэлэг бол: <strong>moissanite</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
