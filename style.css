@@ -1,0 +1,32 @@
+body{
+margin:0;
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+font-family:Arial, sans-serif;
+background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+}
+.card{
+background:#fff;
+padding:40px;
+border-radius:22px;
+width:320px;
+text-align:center;
+box-shadow:0 20px 40px rgba(0,0,0,.2);
+animation:pop .6s ease;
+}
+@keyframes pop{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+h1{color:#ff4d6d;margin:0}
+p{color:#555;margin:20px 0}
+.btns{display:flex;gap:15px}
+button{
+flex:1;
+padding:12px;
+border:none;
+border-radius:12px;
+font-size:16px;
+cursor:pointer;
+}
+.yes{background:#ff4d6d;color:#fff}
+.no{background:#eee;color:#333}
